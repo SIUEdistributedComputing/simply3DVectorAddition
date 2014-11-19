@@ -1,0 +1,179 @@
+Program to perform various operation on a vector using operator overloading
+
+This Program deals with the basic operation
+Addition(+) on Two 3-D vectors.
+
+
+#include "Vector.cpp"
+
+void main()
+{
+	system("cls");
+	Vector A,B,C;
+	int k,ch;
+	char choice = 'y';
+	do
+	{
+		if(choice == 'y' || choice == 'Y')
+		{
+			cout<<"
+	INPUT VECTOR
+";
+			cout<<"
+ENTER THE FIRST VECTOR.
+";
+			A.GetData();
+			cout<<"
+ENTER THE SECOND VECTOR.
+";
+			B.GetData();
+		}
+
+		system("cls");
+		cout<<"
+		PROGRAM FOR VECTOR OPERATIONS.
+";
+		cout<<"
+
+First Vector(A)= "<<A<<"	Second Vector(B)= "<<B<<"
+
+";
+		cout<<"	1.Addition Of Two Vectors.
+";
+
+";
+		cout<<"	2.Exit
+";
+		cout<<"	
+Enter The Choice. ";
+		cin>>ch;
+	    switch(ch)
+		{
+			case 1:
+				cout<<"
+ADDITION OF TWO VECTORS.
+";
+				C = A + B;
+				cout<<"
+The Value Of A+B Is: "<<C;
+				break;
+			
+			case 2:
+				return;
+			default:
+				cout<<"
+WRONG CHOICE.
+";
+				break;
+				getch();
+		}
+		cout<<"
+
+DO YOU WANT TO ENTER A NEW VECTOR (y/n): ";
+		cin>>choice;
+		system("cls");
+	}while(1);
+}
+//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+                             //VECTOR.CPP
+
+#include"Vector.h"
+
+
+Vector::Vector():x(0),y(0),z(0)
+{
+	//cout<<"This Is A Default Constructor.";
+}
+
+Vector Vector::operator +(const Vector &v)const  //Addition
+{
+	Vector res;
+	res.x = x + v.x;
+	res.y = y + v.y;
+	res.z = z + v.z;
+	return res;
+}
+
+
+
+void Vector::GetData()			//Input The Vector
+{
+	cout<<"
+Enter The Value Of x : ";
+	cin>>x;
+	cout<<"
+Enter The Value Of y : ";
+	cin>>y;
+	cout<<"
+Enter The Value Of z : ";
+	cin>>z;
+}
+
+Vector operator *(int k,const Vector &v)
+{
+	return v * k;
+}
+
+
+
+ostream & Vector::Show(ostream & out)const
+{
+	if((x<0) && (y<0) && (z<0))
+	out<<x<<"I"<<y<<"J"<<z<<"K";
+
+	if((x<0) && (y<0) && (z>=0))
+	out<<x<<"I"<<y<<"J+"<<z<<"K";
+
+	if((x<0) && (y>=0) && (z<0))
+	out<<x<<"I+"<<y<<"J"<<z<<"K";
+
+	if((x<0) && (y>=0) && (z>=0))
+	out<<x<<"I+"<<y<<"J+"<<z<<"K";
+
+	if((x>=0) && (y<0) && (z<0))
+	out<<x<<"I"<<y<<"J"<<z<<"K";
+
+	if((x>=0) && (y<0) && (z>=0))
+	out<<x<<"I"<<y<<"J+"<<z<<"K";
+
+	if((x>=0) && (y>=0) && (z<0))
+	out<<x<<"I+"<<y<<"J"<<z<<"K";
+
+	if((x>=0) && (y>=0) && (z>=0))
+	out<<x<<"I+"<<y<<"J+"<<z<<"K";
+
+	return out;
+}
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+                       // VECTOR.H
+
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
+
+using namespace std;
+
+class Vector
+{
+private:
+	int x,y,z;
+public:
+	Vector(int,int,int);
+	Vector();
+	void GetData();
+	Vector operator+(const Vector &v)const;
+	Vector operator-(const Vector &v)const;
+
+
+	ostream & Show(ostream & out)const;
+	friend Vector operator*(const int k,const Vector &v);
+	friend ostream & operator<<(ostream & out,const Vector &v)
+	{
+		v.Show(out);
+	    return out;
+	}
+};
